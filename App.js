@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+import AccountScreen from "./src/screens/AccountScreen";
+import SignIn from "./src/screens/SignIn";
+import SignUp from "./src/screens/SignUp";
+import TrackCreate from "./src/screens/TrackCreate";
+import TrackDetail from "./src/screens/TrackDetail";
+import TrackList from "./src/screens/TrackList";
+import { Provider as AuthProvider} from "./src/context/authContext"
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+//the switch navigator will contain other different navigators. Remember there are different kind of navigators in react native
+const switchNavigator = createSwitchNavigator({ //The switch navigator makes abrupts navigations like when you signIn to a page and does not have a return or go back option
+    loginNavigator: createStackNavigator({
+        SignUp: SignUp,
+        SignIn: SignIn
+    }),
+    mainNavigator: createMaterialBottomTabNavigator({
+        trackListNavigator: createStackNavigator({
+            TrackList: TrackList,
+            TrackDetail: TrackDetail
+        }),
+        TrackCreate: TrackCreate,
+        Account: AccountScreen,
+    })
+})
+
+//we do all this behind to be able to pass our context to all the components rendered in the app
+const App =  createAppContainer(switchNavigator) 
+
+export default () => {
+    return (
+        <AuthProvider>
+            <App/>
+        </AuthProvider>
+    )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
