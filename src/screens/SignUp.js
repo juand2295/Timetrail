@@ -1,10 +1,12 @@
 import { StyleSheet, View } from 'react-native'
 import { Input, Button, Text } from '@rneui/themed';
 import Spacer from '../components/Spacer';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { Context as AuthContext} from '../context/authContext';
 
 
 const SignUp = ({navigation}) => {
+    const {state, signup} = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -29,9 +31,10 @@ const SignUp = ({navigation}) => {
                     autoCapitalize='none'
                     autoCorrect={false}
                 />
+                {state.errorMessage ?<Text style={styles.errorMessage}>{state.errorMessage}</Text>:null}
             </Spacer>
             <Spacer>
-                <Button title='Sign Up'/>
+                <Button title='Sign Up' onPress={()=> signup({email, password})}/>
             </Spacer>
         </View>
     )
@@ -48,6 +51,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent:'center',
         marginBottom: 250
+    },
+    errorMessage: {
+        fontSize: 16,
+        color:'red'
     }
 });
 

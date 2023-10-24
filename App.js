@@ -8,6 +8,7 @@ import TrackCreate from "./src/screens/TrackCreate";
 import TrackDetail from "./src/screens/TrackDetail";
 import TrackList from "./src/screens/TrackList";
 import { Provider as AuthProvider} from "./src/context/authContext"
+import { setNavigator } from "./src/navigationRef"
 
 //the switch navigator will contain other different navigators. Remember there are different kind of navigators in react native
 const switchNavigator = createSwitchNavigator({ //The switch navigator makes abrupts navigations like when you signIn to a page and does not have a return or go back option
@@ -31,7 +32,8 @@ const App =  createAppContainer(switchNavigator)
 export default () => {
     return (
         <AuthProvider>
-            <App/>
+            {/* we pass the navigator obj that allows navigation to the setNavigator fn that we created, so that fn will have acces to the navigator obj */}
+            <App ref={(navigator) => {setNavigator(navigator)}}/> 
         </AuthProvider>
     )
 }
