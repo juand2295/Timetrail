@@ -1,40 +1,31 @@
-import { StyleSheet, View } from 'react-native'
-import { Input, Button, Text } from '@rneui/themed';
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import { Text } from '@rneui/themed';
 import Spacer from '../components/Spacer';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { Context as AuthContext} from '../context/authContext';
-
+import AuthForm from '../components/AuthForm';
+import NavLink from '../components/NavLink';
+import { NavigationEvents } from 'react-navigation';
 
 const SignUp = ({navigation}) => {
-    const {state, signup} = useContext(AuthContext)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const {state, signup, clearError} = useContext(AuthContext)
 
     return (
         <View style={styles.container}>
+            <NavigationEvents
+                onWillFocus={clearError} // para borrar el error cuando navegamos de signin a signup
+            />
+            <AuthForm 
+                header='Sign Up for Hiketracker' 
+                errorMessage={state.errorMessage} 
+                buttonText='Sign Up'
+                onSubmit={signup}
+            />
             <Spacer>
-                <Text h3>Sign Up for Tracker</Text>
-            </Spacer>
-            <Spacer>
-                <Input 
-                    label="Email" 
-                    value={email} 
-                    onChangeText={setEmail} 
-                    autoCapitalize='none'
-                    autoCorrect={false}
+                <NavLink
+                    routeName='SignIn'
+                    text='Already have an account? Sign In'
                 />
-                <Input 
-                    label="Password" 
-                    value={password} 
-                    secureTextEntry
-                    onChangeText={setPassword}
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                />
-                {state.errorMessage ?<Text style={styles.errorMessage}>{state.errorMessage}</Text>:null}
-            </Spacer>
-            <Spacer>
-                <Button title='Sign Up' onPress={()=> signup({email, password})}/>
             </Spacer>
         </View>
     )
@@ -52,10 +43,6 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         marginBottom: 250
     },
-    errorMessage: {
-        fontSize: 16,
-        color:'red'
-    }
 });
 
 export default SignUp;
