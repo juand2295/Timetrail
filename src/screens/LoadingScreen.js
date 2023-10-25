@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { Text, StyleSheet, View} from 'react-native'
-import { Context as AuthContext} from '../context/authContext';
+import { Context as AuthContext} from '../context/AuthContext';
 
 
 const LoadingScreen = () => {

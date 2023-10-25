@@ -2,7 +2,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import { Text } from '@rneui/themed';
 import Spacer from '../components/Spacer';
 import { useContext } from 'react';
-import { Context as AuthContext} from '../context/authContext';
+import { Context as AuthContext} from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
 import { NavigationEvents } from 'react-navigation';

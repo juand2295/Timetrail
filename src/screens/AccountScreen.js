@@ -1,7 +1,7 @@
 import { Text, StyleSheet, View} from 'react-native'
 import { Button } from '@rneui/themed';
 import { useContext } from 'react';
-import { Context as AuthContext} from '../context/authContext';
+import { Context as AuthContext} from '../context/AuthContext';
 import Spacer from '../components/Spacer';
 import { SafeAreaView } from 'react-navigation';
 

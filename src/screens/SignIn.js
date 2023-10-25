@@ -3,7 +3,7 @@ import Spacer from '../components/Spacer';
 import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
 import { useContext } from 'react';
-import { Context as AuthContext} from '../context/authContext';
+import { Context as AuthContext} from '../context/AuthContext';
 import { NavigationEvents } from 'react-navigation';
 
 

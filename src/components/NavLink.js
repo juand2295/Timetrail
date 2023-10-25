@@ -1,5 +1,4 @@
 import { Text, StyleSheet, View, TouchableOpacity} from 'react-native'
-import Spacer from '../components/Spacer';
 import { withNavigation } from 'react-navigation'; //we can use withNavigation because we are navigating inside the same navigator even if it's a child component
 
 const NavLink = ({navigation, text, routeName}) => {
