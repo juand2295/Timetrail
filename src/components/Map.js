@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { Text, StyleSheet, View, ActivityIndicator} from 'react-native'
-import MapView, {Polyline, Circle} from 'react-native-maps'
+import MapView, { Polyline, Circle } from 'react-native-maps'
 import { Context as LocationContext } from '../context/locationContext'
 
 
@@ -28,7 +28,7 @@ const Map = () => {
             <Circle
                 center={state?.currentLocation.coords}
                 radius={30}
-                strokeColor='rgba(158,158,255,1.0)'
+                strokeColor='rgba(58,58,255,1.0)'
                 fillColor='rgba(158,158,255,0.3)'
             />
             {/* <Polyline coordinates={points}/> */}

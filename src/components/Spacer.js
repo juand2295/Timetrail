@@ -10,7 +10,7 @@ const Spacer = ({children}) => {
 
 const styles = StyleSheet.create({
     spacer : {
-        marginVertical: 10,
+        marginTop: 15,
         marginHorizontal: 15
     }
 });
