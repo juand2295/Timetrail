@@ -7,10 +7,11 @@ import SignUp from "./src/screens/SignUp";
 import TrackCreate from "./src/screens/TrackCreate";
 import TrackDetail from "./src/screens/TrackDetail";
 import TrackList from "./src/screens/TrackList";
-import { Provider as AuthProvider} from "./src/context/authContext"
+import { Provider as AuthProvider} from "./src/context/AuthContext"
 import { setNavigator } from "./src/navigationRef"
 import LoadingScreen from "./src/screens/LoadingScreen";
-import { Provider as LocationProvider} from "./src/context/locationContext"
+import { Provider as LocationProvider} from "./src/context/LocationContext"
+import { Provider as TrackProvider } from "./src/context/TrackRecordsContext"
 
 //the switch navigator will contain other different navigators. Remember there are different kind of navigators in react native
 const switchNavigator = createSwitchNavigator({ //The switch navigator makes abrupts navigations like when you signIn to a page and does not have a return or go back option
@@ -34,11 +35,13 @@ const App =  createAppContainer(switchNavigator)
 
 export default () => {
     return (
+        <TrackProvider>
         <LocationProvider>
         <AuthProvider>
             {/* we pass the navigator obj that allows navigation to the setNavigator fn that we created, so that fn will have acces to the navigator obj */}
             <App ref={(navigator) => {setNavigator(navigator)}}/> 
         </AuthProvider>
         </LocationProvider>
+        </TrackProvider>
     )
 }
