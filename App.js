@@ -12,6 +12,20 @@ import { setNavigator } from "./src/navigationRef"
 import LoadingScreen from "./src/screens/LoadingScreen";
 import { Provider as LocationProvider} from "./src/context/LocationContext"
 import { Provider as TrackProvider } from "./src/context/TrackRecordsContext"
+import { Foundation } from '@expo/vector-icons';
+import {
+    SafeAreaProvider,
+} from 'react-native-safe-area-context';
+
+const trackListNavigator = createStackNavigator({  //we had to take apart the trackListNavigator in order to be able to customize the design
+    TrackList: TrackList,
+    TrackDetail: TrackDetail
+})
+
+trackListNavigator.navigationOptions = {
+    title: 'Tracks',
+    tabBarIcon: <Foundation name="list-bullet" size={24} color="black" />
+}
 
 //the switch navigator will contain other different navigators. Remember there are different kind of navigators in react native
 const switchNavigator = createSwitchNavigator({ //The switch navigator makes abrupts navigations like when you signIn to a page and does not have a return or go back option
@@ -21,10 +35,7 @@ const switchNavigator = createSwitchNavigator({ //The switch navigator makes abr
         SignIn: SignIn
     }),
     mainNavigator: createMaterialBottomTabNavigator({
-        trackListNavigator: createStackNavigator({
-            TrackList: TrackList,
-            TrackDetail: TrackDetail
-        }),
+        trackListNavigator: trackListNavigator,
         TrackCreate: TrackCreate,
         Account: AccountScreen,
     })
@@ -35,6 +46,7 @@ const App =  createAppContainer(switchNavigator)
 
 export default () => {
     return (
+        <SafeAreaProvider>
         <TrackProvider>
         <LocationProvider>
         <AuthProvider>
@@ -43,5 +55,6 @@ export default () => {
         </AuthProvider>
         </LocationProvider>
         </TrackProvider>
+        </SafeAreaProvider>
     )
 }

@@ -14,6 +14,8 @@ const authReducer = (state, action) => {
             return {...state, errorMessage: ''}
         case 'signout':
             return { token: null, errorMessage: ''}
+        case 'email':
+            return {...state, email: action.payload}
         default:
             return state
     }
@@ -27,7 +29,7 @@ const signup = dispatch => { // the dispatch prop will give access to the inner 
         const response = await trackerApi.post('/signup/', {email, password})
         // if we signup ,modify state to tell we authenticated
         console.log(response.data.token)
-        await AsyncStorage.setItem('token', response.data.token)
+        await AsyncStorage.multiSet([['token', response.data.token],['email', response.data.email]])
         dispatch({type: 'signin', payload: response.data.token})
         navigate('TrackList')
         } catch (error) {
@@ -40,7 +42,8 @@ const signup = dispatch => { // the dispatch prop will give access to the inner 
 const signin = (dispatch) =>  async ({email, password}) => { 
     try {
         const response = await trackerApi.post('/signin', {email, password});
-        await AsyncStorage.setItem('token', response.data.token)
+        console.log(response.data)
+        await AsyncStorage.multiSet([['token', response.data.token],['email', response.data.email]])
         dispatch({type: 'signin', payload: response.data.token})
         navigate('TrackList')
     } catch (error) {
@@ -69,8 +72,13 @@ const clearError = (dispatch) => () => {
     dispatch({type: 'clear_error'})
 };
 
+const getEmail = dispatch => async () => {
+    const email = await AsyncStorage.getItem('email');
+    dispatch({type: 'email', payload: email})
+}
+
 export const { Provider, Context } = createDataContext( //Provider and Context coming from createDataContext and we will export it passing as arguments 1st: the reducer, 2nd: object with all our different actions and 3rd: our initial State 
     authReducer,
-    {signin, signup, signout, clearError, tryLocalSignin, signout},
-    { token: null, errorMessage:''}
+    {signin, signup, signout, clearError, tryLocalSignin, signout, getEmail},
+    { token: null, errorMessage:'', email:''}
 );

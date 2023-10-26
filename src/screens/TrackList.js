@@ -11,7 +11,6 @@ const TrackList = ({navigation}) => {
     return (
         <>
             <NavigationEvents onWillFocus={fetchTracks}/>
-            <Text style={styles.titles}>Track list</Text>
             <FlatList 
                 data={state}
                 keyExtractor={item => item._id}
@@ -31,6 +30,10 @@ const TrackList = ({navigation}) => {
             
         </>
     )
+}
+
+TrackList.navigationOptions ={
+    title: 'Recorded Tracks'
 }
 
 
