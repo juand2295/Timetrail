@@ -4,10 +4,11 @@ import { Context as TrackRecordsContext } from "../context/TrackRecordsContext"
 import MapView, { Polyline, Circle } from 'react-native-maps'
 import { Button } from '@rneui/themed';
 import Spacer from '../components/Spacer';
+import { NavigationEvents } from 'react-navigation';
 
 const TrackDetail = ({navigation}) => {
     const _id = navigation.getParam('_id')
-    const { state } = useContext(TrackRecordsContext)
+    const { state, deleteTrack } = useContext(TrackRecordsContext)
     const track = state.find( t => t._id === _id)
     console.log(track.locations[track.locations.length-1].timestamp)
     const startDate = new Date(track.locations[0].timestamp)
@@ -18,7 +19,8 @@ const TrackDetail = ({navigation}) => {
     const intialCoords = track.locations[0].coords
 
     return (
-        <>
+        <>  
+            <NavigationEvents onWillBlur={fetchTracks}/>
             <Text style={styles.title}>{track.name}</Text>
             <MapView 
             style={styles.map}
@@ -36,7 +38,10 @@ const TrackDetail = ({navigation}) => {
         <Spacer>
         <Button
                     title="Delete Track"
-                    onPress={()=>{}}
+                    onPress={() => {
+                        deleteTrack(_id)
+                        navigation.navigate('TrackList')
+                    }}
                 />
         </Spacer>
         </>
